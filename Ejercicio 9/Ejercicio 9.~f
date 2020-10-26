@@ -1,0 +1,175 @@
+       function func(x)
+        func=4.*x+5.
+        end
+        
+        program ejercicio 9
+
+        implicit none
+
+        external func
+        integer::N,i,f
+        real::func,aa,bb,cc,Ym,Xm
+        real,allocatable,dimension(:)::A,B,C,D, Dif
+
+        open(20, FILE='ejercicio9.dat', STATUS='UNKNOWN')
+
+   !   genero N numeros random entre 0 y 1 y los guardo en un vector A
+   
+        call error (A,N)
+        
+   !   genero Xn numeros en el intervalo(a,b) y los guardo en un vector B
+
+        call  inter(B,N)
+        
+   !   evaluo los  numeros en el intervalo para obtener el valor de la
+   !   funcion desplazada un numero random entre 0 y 1 en la funcion
+    !  guardo los valores de Y en un vector llamado C
+    
+
+       
+       allocate(C(N))
+       
+       do i=1,N
+
+          C(i) = func(B(i)) + A(i)
+          
+       end do
+       
+   !    ajuste de puntos.
+
+
+   !   obtengo mis valores medios
+   
+       do i= 1,N
+       
+          Xm= B(i)+ Xm
+          Ym= C(i)+ Ym
+
+       end do
+
+       
+       Ym=Ym/N
+       Xm=Xm/N
+
+
+   !   calculo el valor de la pendiente y de la ordenada
+
+       cc=0
+       aa=0
+       bb=0
+       
+       do i = 1,N
+       
+          cc=B(i)*B(i)+cc
+
+          aa=B(i)*C(i)+aa
+
+      print*, aa !si no pongo esto da todo mal
+      
+       end do
+
+        aa=(aa-Xm*Ym*N)/(cc-Xm*Xm*N)
+        bb=Ym-aa*Xm
+
+      print*, aa        ! esta tmb es necesaria
+      
+ !     obtengo los puntos de la recta de ajuste y los guardo en un vector llamado D
+ 
+       allocate(D(N))
+       
+
+       do i = 1,N
+          D(i)=aa*(B(i))+bb
+
+         end do
+
+       
+   !  comparacion de esos valores con los de al funcion
+   
+      allocate(Dif(N))
+
+       do i = 1,N
+
+          Dif(i) = C(i)-D(i)
+
+       end do
+       
+   !   --------------------------------------------------------------
+           write(20,*) "i  Xe   Ye  Ya   Ye-Ya"
+
+       do i = 1,N
+       
+           write(20,*) i,B(i),C(i),D(i),Dif(i)
+
+       end do
+           write(20,*)'   '
+           write(20,*) "LA RECTA AJUSTADA ES:",'  Y =',aa,'*   X   +',bb
+           write(20,*)'   '
+
+       pause
+       deallocate(A,B,C,D,Dif)
+       
+        close(20)
+        
+!      ----------------------------------------------------------------
+   !    subrutinas
+!      ----------------------------------------------------------------
+
+       contains
+
+!      ----------------------------------------------------------------
+
+        subroutine  error(A,N)
+
+        implicit none
+        INTEGER i, N
+        real,allocatable,dimension(:)::A
+
+        write(*,*) 'introduzca el numero de puntos que desea'
+        read(*,*) N
+
+       allocate(A(N))
+        do i = 1, N
+          A(i) = ran()
+        end do
+        end subroutine
+
+!      ----------------------------------------------------------------
+
+        subroutine  inter(B,N)
+        
+        real,allocatable,dimension(:)::B
+        real::k,f
+        integer:: N
+        write(*,*) 'introduzca el numero menor del intervalo'
+        read(*,*) k
+        write(*,*) 'introduzca el numero mayor del intervalo'
+        read(*,*) f
+
+ !     presentacion de los datos
+ 
+        write(20,*) ' '
+        write(20,*) 'Notacion:'
+        write(20,*) ' '
+        write(20,*) "     Ye,Xe = valor de Y/X experimental"
+        write(20,*) "     Ya = valor de Y ajustado"
+        write(20,*) ' '
+        write(20,*) "En el intervalo",'(',k,',',f,')'
+        write(20,*) "usando ",N,' Puntos'
+
+        allocate(B(N))
+
+        do i = 1, N
+           B(i)= ran ( )
+           B(i)=k+B(i)*(f-k)
+
+        end do
+
+        end subroutine
+
+!      ----------------------------------------------------------------
+
+        end
+
+!      ----------------------------------------------------------------
+
