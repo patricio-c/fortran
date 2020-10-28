@@ -1,0 +1,17 @@
+set size 0.8,0.8
+set title “Fase vs. Polarizacion”
+set xlabel “Fase (grados)”
+set ylabel “Pol (%)”
+set format y “%.1f”
+set format x “%.0f”
+set terminal postscript enhanced
+set output “sale.eps”
+plot [0:30] “datos.dat” u 4:10:7 w e pt 4, 0.
+unset output
+set terminal wxt
+unset size
+unset title
+unset xlabel
+unset ylabel
+unset format y
+unset format x

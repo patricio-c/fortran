@@ -1,0 +1,2 @@
+con radios 200 (default)
+positivo(22, negativo 20, 0, 0)

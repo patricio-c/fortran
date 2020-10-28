@@ -1,0 +1,12 @@
+
+        program prueba
+        include 'matrizmxn.f'
+!       real,allocatable,dimension(:,:)::A
+        write(*,*) mat(:,1)
+        pause
+
+
+
+   !     include 'matrizmxn.txt'
+
+        end program

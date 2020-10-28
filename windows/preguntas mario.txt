@@ -1,0 +1,5 @@
+preguntas mario. 
+- como intrroduzo yo en el codigo de secante
+- falla el codigo de secante y newton para eje 4 A para la raiz 0
+-arreglar en ej4A el tema de elegir 1-1=0 ya que me rompe todo
+- en ej 4A newton y secante no me los hace
